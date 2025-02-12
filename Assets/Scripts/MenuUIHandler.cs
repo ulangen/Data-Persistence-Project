@@ -22,4 +22,9 @@ public class MenuUIHandler : MonoBehaviour
         Application.Quit();
 #endif
     }
+
+    public void SetUsername(string username)
+    {
+        DataManager.Instance.Username = username;
+    }
 }
