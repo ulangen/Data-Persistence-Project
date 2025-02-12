@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class LeaderboardUIManager : MonoBehaviour
+public class LeaderboardUIHandler : MonoBehaviour
 {
     public List<Text> m_LeaderboardTextItems;
 
