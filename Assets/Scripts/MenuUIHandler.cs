@@ -23,6 +23,11 @@ public class MenuUIHandler : MonoBehaviour
 #endif
     }
 
+    public void OpenLeaderboard()
+    {
+        SceneManager.LoadScene(2);
+    }
+
     public void SetUsername(string username)
     {
         DataManager.Instance.Username = username;
