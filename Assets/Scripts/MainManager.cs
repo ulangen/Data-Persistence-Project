@@ -12,7 +12,7 @@ public class MainManager : MonoBehaviour
 
     public Text ScoreText;
     public BestScoreLoader BestScoreText;
-    public GameObject GameOverText;
+    public GameObject GameOverOverlay;
 
     private bool m_Started = false;
     private int m_Points;
@@ -72,7 +72,7 @@ public class MainManager : MonoBehaviour
     public void GameOver()
     {
         m_GameOver = true;
-        GameOverText.SetActive(true);
+        GameOverOverlay.SetActive(true);
 
         if (DataManager.Instance != null)
         {
