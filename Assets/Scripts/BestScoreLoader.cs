@@ -16,13 +16,16 @@ public class BestScoreLoader : MonoBehaviour
     {
         if (DataManager.Instance != null)
         {
-            if (DataManager.Instance.LoadedScorePoints == -1)
+            Leaderboard leaderboard = DataManager.Instance.Leaderboard;
+
+            if (leaderboard.Entries.Count == 0)
             {
                 BestScoreText.text = "No one has played the game yet.";
                 return;
             }
 
-            BestScoreText.text = $"Best Score : {DataManager.Instance.LoadedUsername} : {DataManager.Instance.LoadedScorePoints}";
+            LeaderboardEntry firstEntry = leaderboard.Entries[0];
+            BestScoreText.text = $"Best Score : {firstEntry.Username} : {firstEntry.Score}";
             return;
         }
 

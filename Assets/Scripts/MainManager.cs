@@ -76,13 +76,9 @@ public class MainManager : MonoBehaviour
 
         if (DataManager.Instance != null)
         {
-            if (m_Points > DataManager.Instance.LoadedScorePoints)
-            {
-                DataManager.Instance.ScorePoints = m_Points;
-                DataManager.Instance.SaveScore();
-                DataManager.Instance.LoadScore();
-                BestScoreText.UpdateScore();
-            }
+            DataManager.Instance.Leaderboard.AddEntry(DataManager.Instance.Username, m_Points);
+            DataManager.Instance.SaveScore();
+            BestScoreText.UpdateScore();
         }
     }
 }

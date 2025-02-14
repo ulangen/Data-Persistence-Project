@@ -3,14 +3,45 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
+[System.Serializable]
+public class LeaderboardEntry
+{
+    public string Username;
+    public int Score;
+}
+
+[System.Serializable]
+public class Leaderboard
+{
+    public List<LeaderboardEntry> Entries = new();
+
+    private int m_MaxEntries = 5;
+
+    public void AddEntry(string username, int score)
+    {
+        var entry = new LeaderboardEntry
+        {
+            Username = username,
+            Score = score
+        };
+        Entries.Add(entry);
+
+        Entries.Sort((a, b) => b.Score.CompareTo(a.Score));
+
+        if (Entries.Count > m_MaxEntries)
+        {
+            Entries.RemoveAt(Entries.Count - 1);
+        }
+    }
+}
+
 public class DataManager : MonoBehaviour
 {
     public static DataManager Instance;
 
     public string Username = "Anonimus";
-    public int ScorePoints = -1;
-    public string LoadedUsername = "";
-    public int LoadedScorePoints = -1;
+
+    public Leaderboard Leaderboard = new();
 
     private void Awake()
     {
@@ -25,21 +56,9 @@ public class DataManager : MonoBehaviour
         LoadScore();
     }
 
-    [System.Serializable]
-    class SaveData
-    {
-        public string Username;
-        public int ScorePoints;
-    }
-
     public void SaveScore()
     {
-        SaveData data = new SaveData();
-        data.Username = Username;
-        data.ScorePoints = ScorePoints;
-
-        string json = JsonUtility.ToJson(data);
-
+        string json = JsonUtility.ToJson(Leaderboard);
         File.WriteAllText(Application.persistentDataPath + "/savefile.json", json);
     }
 
@@ -49,10 +68,7 @@ public class DataManager : MonoBehaviour
         if (File.Exists(path))
         {
             string json = File.ReadAllText(path);
-            SaveData data = JsonUtility.FromJson<SaveData>(json);
-
-            LoadedUsername = data.Username;
-            LoadedScorePoints = data.ScorePoints;
+            Leaderboard = JsonUtility.FromJson<Leaderboard>(json);
         }
     }
 }
