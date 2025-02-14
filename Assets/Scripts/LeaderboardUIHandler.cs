@@ -16,6 +16,16 @@ public class LeaderboardUIHandler : MonoBehaviour
             ShowLoadDataError();
             return;
         }
+
+        int count = Mathf.Min(LeaderboardTextItems.Count, DataManager.Instance.Leaderboard.Entries.Count);
+        for (int i = 0; i < count; i++)
+        {
+            Text item = LeaderboardTextItems[i];
+            LeaderboardEntry entry = DataManager.Instance.Leaderboard.Entries[i];
+
+            item.text = $"{entry.Username} : {entry.Score}";
+            item.gameObject.SetActive(true);
+        }
     }
 
     private void ShowLoadDataError()
