@@ -35,6 +35,12 @@ public class Leaderboard
     }
 }
 
+[System.Serializable]
+public class SettingsData
+{
+    public AudioData AudioData = new();
+}
+
 public class DataManager : MonoBehaviour
 {
     public static DataManager Instance;
@@ -42,6 +48,7 @@ public class DataManager : MonoBehaviour
     public string Username = "Anonimus";
 
     public Leaderboard Leaderboard = new();
+    public SettingsData Settings = new();
 
     private void Awake()
     {
@@ -53,18 +60,36 @@ public class DataManager : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
+
+        LoadSettings();
         LoadScore();
+    }
+
+    public void SaveSettings()
+    {
+        string json = JsonUtility.ToJson(Settings);
+        File.WriteAllText(Application.persistentDataPath + "/settings.json", json);
+    }
+
+    public void LoadSettings()
+    {
+        string path = Application.persistentDataPath + "/settings.json";
+        if (File.Exists(path))
+        {
+            string json = File.ReadAllText(path);
+            Settings = JsonUtility.FromJson<SettingsData>(json);
+        }
     }
 
     public void SaveScore()
     {
         string json = JsonUtility.ToJson(Leaderboard);
-        File.WriteAllText(Application.persistentDataPath + "/savefile.json", json);
+        File.WriteAllText(Application.persistentDataPath + "/leaderboard.json", json);
     }
 
     public void LoadScore()
     {
-        string path = Application.persistentDataPath + "/savefile.json";
+        string path = Application.persistentDataPath + "/leaderboard.json";
         if (File.Exists(path))
         {
             string json = File.ReadAllText(path);
