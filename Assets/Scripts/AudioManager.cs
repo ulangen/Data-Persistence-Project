@@ -75,7 +75,7 @@ public class AudioManager : MonoBehaviour
 
             if (m_IsDataLoaded)
             {
-                // Изменение локльных настроек громкости
+                // Изменение локальных настроек громкости
                 AudioData.IsMuted = isMuted;
                 HasDataChanged = true;
             }
