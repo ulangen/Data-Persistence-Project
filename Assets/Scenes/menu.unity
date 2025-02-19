@@ -926,7 +926,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c61cfaf171fdb5741a8b5307942ea060, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AudioData:
+    MasterVolume: 1
+    MusicVolume: 1
+    IsMuted: 0
   MainAudioMixer: {fileID: 24100000, guid: a4dbce9746fde2048bffc2ca88eea805, type: 2}
+  HasDataChanged: 0
 --- !u!4 &737770735
 Transform:
   m_ObjectHideFlags: 0
@@ -1557,6 +1562,11 @@ MonoBehaviour:
   Username: Anonimus
   Leaderboard:
     Entries: []
+  Settings:
+    AudioData:
+      MasterVolume: 1
+      MusicVolume: 1
+      IsMuted: 0
 --- !u!4 &1526009128
 Transform:
   m_ObjectHideFlags: 0
@@ -2120,6 +2130,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c357902fcddb58948ac2eed2812282b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Username: {fileID: 202784254}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
