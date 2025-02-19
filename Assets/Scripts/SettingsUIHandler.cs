@@ -12,6 +12,8 @@ public class SettingsUIHandler : MonoBehaviour
     public Button SaveButton;
     public Text SaveButtonText;
 
+    public Toggle MuteToggler;
+
     AudioManager m_AudioManager;
     bool m_IsDataLoaded = false;
 
@@ -24,6 +26,7 @@ public class SettingsUIHandler : MonoBehaviour
             // Установка значений регуляторов громкости из настроек
             MasterVolumeSlider.value = m_AudioManager.AudioData.MasterVolume;
             MusicVolumeSlider.value = m_AudioManager.AudioData.MusicVolume;
+            MuteToggler.isOn = m_AudioManager.AudioData.IsMuted;
             m_IsDataLoaded = true;
 
             if (m_AudioManager.HasDataChanged)
@@ -81,6 +84,15 @@ public class SettingsUIHandler : MonoBehaviour
         if (m_AudioManager != null && m_IsDataLoaded)
         {
             m_AudioManager.SetMusicVolume(volume);
+            OnDataChanged();
+        }
+    }
+
+    public void OnMuteToggled(bool isMuted)
+    {
+        if (m_AudioManager != null && m_IsDataLoaded)
+        {
+            m_AudioManager.SetMute(isMuted);
             OnDataChanged();
         }
     }

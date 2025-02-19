@@ -8,6 +8,7 @@ public class AudioData
 {
     public float MasterVolume = 1.0f;
     public float MusicVolume = 1.0f;
+    public bool IsMuted = false;
 }
 
 public class AudioManager : MonoBehaviour
@@ -39,8 +40,15 @@ public class AudioManager : MonoBehaviour
             AudioData = DataManager.Instance.Settings.AudioData;
 
             // Применение громкости звуков из настроек
-            SetMasterVolume(AudioData.MasterVolume);
-            SetMusicVolume(AudioData.MusicVolume);
+            if (AudioData.IsMuted)
+            {
+                SetMasterVolume(0);
+            }
+            else
+            {
+                SetMasterVolume(AudioData.MasterVolume);
+                SetMusicVolume(AudioData.MusicVolume);
+            }
             m_IsDataLoaded = true;
         }
     }
@@ -54,6 +62,23 @@ public class AudioManager : MonoBehaviour
         else
         {
             return Mathf.Log10(volume) * 20.0f;
+        }
+    }
+
+    public void SetMute(bool isMuted)
+    {
+        if (AudioData != null)
+        {
+            // Изменение главного уровня громкости
+            float volumeDB = isMuted ? LinearVolumeToDB(0) : LinearVolumeToDB(AudioData.MasterVolume);
+            MainAudioMixer.SetFloat("MasterVolumeLevel", volumeDB);
+
+            if (m_IsDataLoaded)
+            {
+                // Изменение локльных настроек громкости
+                AudioData.IsMuted = isMuted;
+                HasDataChanged = true;
+            }
         }
     }
 
